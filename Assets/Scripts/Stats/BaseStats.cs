@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using GameDevTV.Utils;
 using UnityEngine;
 
 
@@ -18,20 +19,35 @@ namespace RPG.Stats {
 
         public event Action onLevelUp;
 
-        int currentLevel = 0;
+        LazyValue<int> currentLevel;
+
+        Experience experience;
+
+        private void Awake() {
+            experience = GetComponent<Experience>();
+            currentLevel = new LazyValue<int>(CalculateLevel);
+        }
 
         private void Start() {
-            currentLevel = CalculateLevel();
-            Experience experience = GetComponent<Experience>();
+            currentLevel.ForceInit();
+        }
+
+        private void OnEnable() {
             if (experience != null) {
                 experience.onExperienceGained += UpdateLevel;
             }
         }
 
+        private void OnDisable() {
+            if (experience != null) {
+                experience.onExperienceGained -= UpdateLevel;
+            }
+        }
+
         private void UpdateLevel() {
             int newLevel = CalculateLevel();
-            if (newLevel > currentLevel) {
-                currentLevel = newLevel;
+            if (newLevel > currentLevel.value) {
+                currentLevel.value = newLevel;
                 LevelUpEffect();
                 onLevelUp();
             }
@@ -52,10 +68,7 @@ namespace RPG.Stats {
         }
 
         public int GetLevel() {
-            if (currentLevel < 1) {
-                currentLevel = CalculateLevel();
-            }
-            return currentLevel;
+            return currentLevel.value;
         }
 
         private float GetAdditiveModifier(Stat stat)
