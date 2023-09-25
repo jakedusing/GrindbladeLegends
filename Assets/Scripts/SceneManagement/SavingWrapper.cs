@@ -44,7 +44,7 @@ namespace RPG.SceneManagement {
         public void Load()
         {
             // call to saving system and tell it to load
-            StartCoroutine(GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile));
+            GetComponent<SavingSystem>().Load(defaultSaveFile);
         }
 
         public void Delete() {

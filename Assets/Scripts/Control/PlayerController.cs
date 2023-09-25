@@ -25,30 +25,41 @@ namespace RPG.Control
     [SerializeField] CursorMapping[] cursorMappings = null;
     [SerializeField] float maxNavMeshProjectionDistance = 1f;
     [SerializeField] float raycastRadius = 1f;
+
+    bool isDraggingUI = false;
     
 
-    private void Awake() {
-        health = GetComponent<Health>();
-    }
-
-    void Update()
-    {
-        if (InteractWithUI()) return;
-        if (health.IsDead()) {
-            SetCursor(CursorType.None);
-            return;
+        private void Awake() {
+            health = GetComponent<Health>();
         }
 
-        if (InteractWithComponent()) return;
-        if (InteractWithMovement()) return;
+        void Update()
+        {
+            if (InteractWithUI()) return;
+            if (health.IsDead()) {
+                SetCursor(CursorType.None);
+                return;
+            }
 
-        SetCursor(CursorType.None);
-    }
+            if (InteractWithComponent()) return;
+            if (InteractWithMovement()) return;
+
+            SetCursor(CursorType.None);
+        }
 
         private bool InteractWithUI()
         {
+            if (Input.GetMouseButtonUp(0)) {
+                isDraggingUI = false;
+            }
             if (EventSystem.current.IsPointerOverGameObject()) {
+                if (Input.GetMouseButton(0)) {
+                    isDraggingUI = true;
+                }
                 SetCursor(CursorType.UI);
+                return true;
+            }
+            if (isDraggingUI) {
                 return true;
             }
             return false;
@@ -81,20 +92,20 @@ namespace RPG.Control
 
 
         private bool InteractWithMovement() {
-        Vector3 target;
-        bool hasHit = RaycastNavMesh(out target);
-        if (hasHit)
-        {
-            if (!GetComponent<Mover>().CanMoveTo(target)) return false;
+            Vector3 target;
+            bool hasHit = RaycastNavMesh(out target);
+            if (hasHit)
+            {
+                if (!GetComponent<Mover>().CanMoveTo(target)) return false;
 
-            if (Input.GetMouseButton(0)) {
-                GetComponent<Mover>().StartMoveAction(target, 1f);
+                if (Input.GetMouseButton(0)) {
+                    GetComponent<Mover>().StartMoveAction(target, 1f);
+                }
+                SetCursor(CursorType.Movement);
+                return true;
             }
-            SetCursor(CursorType.Movement);
-            return true;
+            return false;
         }
-        return false;
-    }
 
     private bool RaycastNavMesh(out Vector3 target) {
         target = new Vector3();
