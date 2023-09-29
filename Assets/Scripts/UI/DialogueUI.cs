@@ -11,6 +11,7 @@ namespace RPG.UI {
         PlayerConversant playerConversant;
         [SerializeField] TextMeshProUGUI AIText;
         [SerializeField] Button nextButton;
+        [SerializeField] Button quitButton;
         [SerializeField] GameObject AIResponse;
         [SerializeField] Transform choiceRoot;
         [SerializeField] GameObject choicePrefab;
@@ -20,17 +21,18 @@ namespace RPG.UI {
 
         private void Start() {
             playerConversant = GameObject.FindGameObjectWithTag(PLAYER).GetComponent<PlayerConversant>();
-            nextButton.onClick.AddListener(Next);
+            playerConversant.onConversationUpdated += UpdateUI;
+            nextButton.onClick.AddListener(() => playerConversant.Next());
+            quitButton.onClick.AddListener(() => playerConversant.Quit());
 
-            UpdateUI();
-        }
-
-        private void Next() {
-            playerConversant.Next();
             UpdateUI();
         }
 
         private void UpdateUI() {
+            gameObject.SetActive(playerConversant.IsActive());
+            if (!playerConversant.IsActive()) {
+                return;
+            }
             AIResponse.SetActive(!playerConversant.IsChoosing());
             choiceRoot.gameObject.SetActive(playerConversant.IsChoosing());
             // Shows the players options in dialogue convo
@@ -60,7 +62,6 @@ namespace RPG.UI {
                 Button button = choiceInstance.GetComponentInChildren<Button>();
                 button.onClick.AddListener(() => {
                     playerConversant.SelectChoice(choice);
-                    UpdateUI();
                 });
             }
         }
