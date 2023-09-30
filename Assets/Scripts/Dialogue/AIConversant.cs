@@ -7,6 +7,7 @@ namespace RPG.Dialogue {
     public class AIConversant : MonoBehaviour, IRaycastable
     {
         [SerializeField] Dialogue dialogue;
+        [SerializeField] string conversantName;
         public CursorType GetCursorType()
         {
             return CursorType.Dialogue;
@@ -14,6 +15,7 @@ namespace RPG.Dialogue {
 
         public bool HandleRaycast(PlayerController callingController)
         {
+            if (!enabled) return false;
             if (dialogue == null) {
                 return false;
             }
@@ -23,6 +25,10 @@ namespace RPG.Dialogue {
                 Debug.Log("convo started");
             }
             return true;
+        }
+
+        public string GetName() {
+            return conversantName;
         }
     }
 }

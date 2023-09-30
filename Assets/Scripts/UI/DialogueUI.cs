@@ -15,6 +15,7 @@ namespace RPG.UI {
         [SerializeField] GameObject AIResponse;
         [SerializeField] Transform choiceRoot;
         [SerializeField] GameObject choicePrefab;
+        [SerializeField] TextMeshProUGUI conversantName;
 
         private const string PLAYER = "Player";
 
@@ -33,6 +34,7 @@ namespace RPG.UI {
             if (!playerConversant.IsActive()) {
                 return;
             }
+            conversantName.text = playerConversant.GetCurrentConversantName();
             AIResponse.SetActive(!playerConversant.IsChoosing());
             choiceRoot.gameObject.SetActive(playerConversant.IsChoosing());
             // Shows the players options in dialogue convo
