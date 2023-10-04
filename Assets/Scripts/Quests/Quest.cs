@@ -13,7 +13,8 @@ namespace RPG.Quests {
         [SerializeField] List<Reward> rewards = new List<Reward>();
 
         [System.Serializable]
-        class Reward {
+        public class Reward {
+            [Min(1)]
             public int number;
             public InventoryItem item;
         }
@@ -30,6 +31,10 @@ namespace RPG.Quests {
 
         public int GetObjectiveCount() {
             return objectives.Count;
+        }
+
+        public IEnumerable<Reward> GetRewards() {
+            return rewards;
         }
 
         public IEnumerable<Objective> GetObjectives() {
