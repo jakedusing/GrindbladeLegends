@@ -7,6 +7,7 @@ using RPG.Movement;
 using RPG.Attributes;
 using UnityEngine;
 using GameDevTV.Utils;
+using UnityEngine.AI;
 
 namespace RPG.Control {
     public class AIController : MonoBehaviour {
@@ -41,6 +42,18 @@ namespace RPG.Control {
             player = GameObject.FindWithTag(PLAYER);
 
             guardPosition = new LazyValue<Vector3>(GetGuardPosition);
+            guardPosition.ForceInit();
+        }
+
+        public void Reset()
+        {
+            NavMeshAgent navMeshAgent = GetComponent<NavMeshAgent>();
+            navMeshAgent.Warp(guardPosition.value);
+            timeSinceLastSawPlayer = Mathf.Infinity;
+            timeSinceArrivedAtWaypoint = Mathf.Infinity;
+            timeSinceAggrevated = Mathf.Infinity;
+            currentWaypointIndex = 0;
+
         }
 
         private Vector3 GetGuardPosition() {
@@ -145,6 +158,5 @@ namespace RPG.Control {
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position, chaseDistance);
         }
-
     }
 }
