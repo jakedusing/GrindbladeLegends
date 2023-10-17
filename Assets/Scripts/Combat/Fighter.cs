@@ -53,12 +53,12 @@ namespace RPG.Combat
             timeSinceLastAttack += Time.deltaTime;
 
             if (target == null) return;
-            //if (target.IsDead()) return;
+            if (target.IsDead()) return;
             //for testing, using auto combat
-            if (target.IsDead()) {
-                target = FindNewTargetInRange();
-                if (target == null) return;
-            }
+            // if (target.IsDead()) {
+            //     target = FindNewTargetInRange();
+            //     if (target == null) return;
+            // }
 
             if (!GetIsInRange(target.transform)) {
                 GetComponent<Mover>().MoveTo(target.transform.position, 1f);

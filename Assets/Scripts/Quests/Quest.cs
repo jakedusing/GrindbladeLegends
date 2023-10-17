@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GameDevTV.Inventories;
+using GameDevTV.Utils;
 using UnityEngine;
 
 namespace RPG.Quests {
@@ -23,6 +24,8 @@ namespace RPG.Quests {
         public class Objective {
             public string refernce;
             public string description;
+            public bool usesCondition = false;
+            public Condition completionCondition;
         }
         
         public string GetTitle() {

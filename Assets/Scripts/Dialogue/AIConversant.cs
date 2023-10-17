@@ -21,12 +21,12 @@ namespace RPG.Dialogue {
                 return false;
             }
 
-            if (GetComponent<Health>().IsDead()) return false;
+            Health health = GetComponent<Health>();
+            if (health && health.IsDead()) return false;
 
             PlayerConversant convo = callingController.GetComponent<PlayerConversant>();
             if (Input.GetMouseButton(0)) {
                 convo.StartDialogue(this, dialogue);
-                Debug.Log("convo started");
             }
             return true;
         }

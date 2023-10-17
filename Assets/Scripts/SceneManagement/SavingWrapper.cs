@@ -12,7 +12,7 @@ namespace RPG.SceneManagement {
 
         [SerializeField] float fadeInTime = 0.2f;
         [SerializeField] float fadeOutTime = 0.2f;
-        [SerializeField] private int firstLevelBuildIndex = 1;
+        [SerializeField]  int firstLevelBuildIndex = 1;
         [SerializeField] int menuLevelBuildIndex = 0;
         private const string currentSaveKey = "currentSaveName";
 
