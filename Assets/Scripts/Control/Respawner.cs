@@ -10,7 +10,7 @@ using UnityEngine.AI;
 namespace RPG.Control {
     public class Respawner : MonoBehaviour
     {
-        [SerializeField] Transform respawnLocation;
+        [SerializeField] public Transform respawnLocation;
         [SerializeField] float respawnDelay = 3f;
         [SerializeField] float fadeTime = .2f;
         [SerializeField] float healthRegenPercentage = 20;

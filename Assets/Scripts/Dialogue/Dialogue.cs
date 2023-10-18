@@ -17,11 +17,13 @@ namespace RPG.Dialogue {
         Dictionary<string, DialogueNode> nodeLookup = new Dictionary<string, DialogueNode>();
         
 #if UNITY_EDITOR
+        
+#endif
+
         private void Awake() {
             
             OnValidate();
         }
-#endif
 
         private void OnValidate() {
             nodeLookup.Clear();

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 using RPG.Control;
+using RPG.Attributes;
 
 
 namespace RPG.SceneManagement {
@@ -74,6 +75,8 @@ namespace RPG.SceneManagement {
             GameObject player = GameObject.FindWithTag(PLAYER);
             player.GetComponent<NavMeshAgent>().Warp(otherPortal.spawnPoint.position);
             player.transform.rotation = otherPortal.spawnPoint.rotation;
+            Respawner respawner = player.GetComponent<Respawner>();
+            respawner.respawnLocation = otherPortal.spawnPoint;
         }
 
         private Portal GetOtherPortral()

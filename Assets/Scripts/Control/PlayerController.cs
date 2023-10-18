@@ -26,7 +26,7 @@ namespace RPG.Control
 
     [SerializeField] CursorMapping[] cursorMappings = null;
     [SerializeField] float maxNavMeshProjectionDistance = 1f;
-    [SerializeField] float raycastRadius = 1f;
+    [SerializeField] float raycastRadius = 0.5f;
     [SerializeField] int numberOfAbilities = 6;
 
     bool isDraggingUI = false;
@@ -87,6 +87,7 @@ namespace RPG.Control
         {
             RaycastHit[] hits = RaycastAllSorted();
             foreach (RaycastHit hit in hits) {
+                float distance = Vector3.Distance(transform.position, hit.point);
                 IRaycastable[] raycastables = hit.transform.GetComponents<IRaycastable>();
                 foreach (IRaycastable raycastable in raycastables) {
                     if (raycastable.HandleRaycast(this)) {
