@@ -1,5 +1,5 @@
 # Grindblade Legends
-A moment from a medieval RPG game.  Includes interacting with NPCs, a quest, combat, and a shop.
+A moment from a medieval RPG game.  Includes interacting with NPCs, questing, combat, and a shop.
 
 # Where to download the game from?
 Grinblade Legends can be downloaded from https://jakedusing.itch.io/grinblade-legends.  Just download, unzip, and run RPG.exe
