@@ -1,4 +1,4 @@
-# GrindbladeLegends
+# Grindblade Legends
 A moment from a medieval RPG game.  Includes interacting with NPCs, a quest, combat, and a shop.
 
 # Where to download the game from?
